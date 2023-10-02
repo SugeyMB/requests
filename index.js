@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 //http://localhost:3000/sugey
 app.get('/', (req, res)=> {
     res.json({msg: 'Hello GET'})
@@ -28,6 +30,20 @@ if(user === 'Sugey' && password === '123'){
 }
 res.status(404).json({msg: 'wrong user or password'})
 })
+
+app.post('/login', (req, res) => {
+    const {user, password} = req.body
+    if (!user || !password){
+        res.json({msg: 'You need to provide <user> and <password> params'})
+    }
+    
+if(user === 'Sugey' && password === '123'){
+    res.json({msg: 'Sing In succesfull'})
+    return
+}
+res.status(404).json({msg: 'wrong user or password'})
+})
+
 app.post('/',(req, res)=>{
     res.json({msg:'Hello POST'})
 })
